@@ -17,19 +17,44 @@
 
           <span class="p-input-icon-right">
             <i class="pi pi-search"></i>
-            <input type="text" pInputText [(ngModel)]="value" />
+            <form (ngSubmit)="fetchData()">
+              <input
+                type="text"
+                pInputText
+                [(ngModel)]="value"
+                name="searchQuery"
+              />
+              <p-button type="submit" [style]="{ marginLeft: '0.5em' }"
+                >Rechercher</p-button
+              >
+            </form>
           </span>
         </section>
       </div>
-      <div class="col-12 md:col-6 overflow-hidden">
-        <img
-          src="https://picsum.photos/200/300"
-          alt="Image"
-          class="md:ml-auto block md:h-full"
-          style="clip-path: polygon(8% 0, 100% 0%, 100% 100%, 0 100%)"
-        />
-      </div>
+      <img
+      src="https://picsum.photos/200/300"
+      alt="Image"
+      class="md:ml-auto md:block hidden md:h-full"
+      style="clip-path: polygon(8% 0, 100% 0%, 100% 100%, 0 100%)"
+    />
     </div>
+
+    <!-- CARDS -->
+    <ng-container *ngFor="let result of searchResults; let i = index">
+        <div class="grid grid-cols-6 gap-6">
+          <ng-container *ngIf="searchResults[i]">
+            <p-card [header]="searchResults[i].title" [subheader]="searchResults[i].author" [style]="{ marginLeft: '3em', width: '200px' }">
+              <ng-template pTemplate="header">
+                <img alt="Card" [src]="searchResults[i].imgUrl" class="card-image" />
+              </ng-template>
+              <ng-template pTemplate="footer">
+                <p-button label="Quoi" icon="pi pi-check"></p-button>
+                <p-button label="Feur" icon="pi pi-times" styleClass="p-button-secondary" [style]="{ 'margin-left': '.5em' }"></p-button>
+              </ng-template>
+            </p-card>
+          </ng-container>
+      </div>
+    </ng-container>
   </div>
 </main>
 
