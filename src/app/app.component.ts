@@ -8,6 +8,7 @@ import { ButtonModule } from 'primeng/button';
 import { HttpClient, HttpClientModule } from '@angular/common/http';
 import { firstValueFrom } from 'rxjs';
 import { CommonModule } from '@angular/common';
+import { SearchResult } from './interfaces/search.interface';
 
 @Component({
   selector: 'app-root',
@@ -20,9 +21,15 @@ import { CommonModule } from '@angular/common';
 export class AppComponent {
   title = 'front';
   value: string = '';
-  searchResults: any[] = [];
+  searchResults: SearchResult[] = [];
+  isAdvancedSearch: boolean = false;
 
-  constructor(private http: HttpClient) {}
+
+  constructor(private http: HttpClient) { }
+
+  toggleSearchMode() {
+    this.isAdvancedSearch = !this.isAdvancedSearch;
+  }
 
   async fetchData() {
     try {
@@ -34,5 +41,40 @@ export class AppComponent {
       console.error('Error fetching data:', error);
     }
   }
+
+  async fetchDataAdvanced() {
+    try {
+      const response$ = this.http.post<any[]>('http://localhost:3000/word/search-advanced', { regex: this.value });
+      const response = await firstValueFrom(response$) || [];
+
+      const groupedResults: SearchResult[] = [];
+
+      response.forEach((result: any) => {
+        const { title, mot, occurrences, imgUrl, author } = result;
+
+        const existingResult = groupedResults.find(item => item.title === title);
+
+        if (existingResult) {
+          existingResult.wordOccurences.push({ mot, occurrences });
+        } else {
+          groupedResults.push({
+            title,
+            wordOccurences: [{ mot, occurrences }],
+            imgUrl,
+            author
+          });
+        }
+      });
+
+      this.searchResults = groupedResults;
+
+      console.log('Response:', this.searchResults);
+    } catch (error) {
+      console.error('Error fetching data:', error);
+    }
+  }
+
+
+
 
 }

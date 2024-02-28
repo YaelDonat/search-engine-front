@@ -16,18 +16,18 @@
           </p>
 
           <span class="p-input-icon-right">
-            <i class="pi pi-search"></i>
-            <form (ngSubmit)="fetchData()">
+            <form (ngSubmit)="isAdvancedSearch ? fetchDataAdvanced() : fetchData()">
               <input
+                class="m-1"
                 type="text"
                 pInputText
                 [(ngModel)]="value"
                 name="searchQuery"
               />
-              <p-button type="submit" [style]="{ marginLeft: '0.5em' }"
-                >Rechercher</p-button
-              >
+              <p-button type="submit" [label]="isAdvancedSearch ? 'Recherche avancée' : 'Recherche simple'" icon="pi pi-search" iconPos="right" >
+          </p-button>
             </form>
+            <p-button [label]="isAdvancedSearch ? 'Recherche simple' : 'Recherche avancée'" [text]="true" size="small" (click)="toggleSearchMode()"></p-button>
           </span>
         </section>
       </div>
