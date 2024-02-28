@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { RouterOutlet } from '@angular/router';
 import { InputTextModule } from 'primeng/inputtext';
@@ -10,20 +10,32 @@ import { HttpClient, HttpClientModule } from '@angular/common/http';
 import { firstValueFrom } from 'rxjs';
 import { CommonModule } from '@angular/common';
 import { SearchResult } from './interfaces/search.interface';
+import { TableModule } from 'primeng/table';
+
 
 @Component({
   selector: 'app-root',
   standalone: true,
-  imports: [RouterOutlet, CommonModule, FormsModule, InputTextModule, StyleClassModule, ButtonModule, CardModule, HttpClientModule, OverlayPanelModule],
+  imports: [RouterOutlet, CommonModule, FormsModule, InputTextModule, StyleClassModule, ButtonModule, CardModule, HttpClientModule, OverlayPanelModule, TableModule],
   templateUrl: './app.component.html',
   styleUrl: './app.component.scss'
 })
 
-export class AppComponent {
+export class AppComponent implements OnInit {
+
+  ngOnInit() {
+    this.searchResults = this.searchResults;
+    this.loading = false;
+    this.advancedSearchPerformed = false;;
+  }
+
   title = 'front';
   value: string = '';
   searchResults: SearchResult[] = [];
   isAdvancedSearch: boolean = false;
+  loading: boolean = true;
+  advancedSearchPerformed: boolean = false;
+
 
 
   constructor(private http: HttpClient) { }
@@ -37,6 +49,7 @@ export class AppComponent {
       const response$ = this.http.post<any[]>('http://localhost:3000/word/search', { keyword: this.value });
       const response = await firstValueFrom(response$) || [];
       this.searchResults = response;
+      this.advancedSearchPerformed = false;
       console.log('Response:', this.searchResults);
     } catch (error) {
       console.error('Error fetching data:', error);
@@ -49,6 +62,7 @@ export class AppComponent {
       const response = await firstValueFrom(response$) || [];
 
       const groupedResults: SearchResult[] = [];
+      this.advancedSearchPerformed = true;
 
       response.forEach((result: any) => {
         const { title, mot, occurrences, imgUrl, author } = result;
