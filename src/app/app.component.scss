@@ -3,8 +3,26 @@
     object-fit: cover;
   }
 
-  .ellipsis {
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
+  :host ::ng-deep {
+    .p-card.p-component > .p-card-body > .p-card-title {
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      max-width: 200px;
+    }
+  }
+
+  :host ::ng-deep {
+    .p-card.p-component > .p-card-body > .p-card-subtitle {
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      max-width: 200px;
+    }
+  }
+
+  :host ::ng-deep {
+    p-card.p-element {
+     min-height: max-content;
+    }
   }

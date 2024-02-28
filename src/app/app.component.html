@@ -40,21 +40,23 @@
     </div>
 
     <!-- CARDS -->
-    <ng-container *ngFor="let result of searchResults; let i = index">
-        <div class="grid grid-cols-6 gap-6">
-          <ng-container *ngIf="searchResults[i]">
-            <p-card [header]="searchResults[i].title" [subheader]="searchResults[i].author" [style]="{ marginLeft: '3em', width: '200px' }">
-              <ng-template pTemplate="header">
-                <img alt="Card" [src]="searchResults[i].imgUrl" class="card-image" />
-              </ng-template>
-              <ng-template pTemplate="footer">
-                <p-button label="Quoi" icon="pi pi-check"></p-button>
-                <p-button label="Feur" icon="pi pi-times" styleClass="p-button-secondary" [style]="{ 'margin-left': '.5em' }"></p-button>
-              </ng-template>
-            </p-card>
-          </ng-container>
-      </div>
-    </ng-container>
+    <div class ="grid justify-content-start">
+        <ng-container *ngFor="let result of searchResults; let i = index">
+          <div class="col-fixed">
+            <ng-container *ngIf="searchResults[i]">
+              <p-card [header]="searchResults[i].title" [title]="searchResults[i].title  +' - ' + searchResults[i].author " [subheader]="searchResults[i].author" [style]="{ marginLeft: '3em', width: '200px' }">
+                <ng-template pTemplate="header">
+                  <img alt="Card" [src]="searchResults[i].imgUrl" class="card-image" />
+                </ng-template>
+                <ng-template pTemplate="footer">
+                  <p-button label="Consulter" icon="pi pi-eye"></p-button>
+                </ng-template>
+              </p-card>
+            </ng-container>
+          </div>
+      </ng-container>
+    </div>
+    
   </div>
 </main>
 
