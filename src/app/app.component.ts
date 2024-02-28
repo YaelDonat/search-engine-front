@@ -3,6 +3,7 @@ import { FormsModule } from '@angular/forms';
 import { RouterOutlet } from '@angular/router';
 import { InputTextModule } from 'primeng/inputtext';
 import { StyleClassModule } from 'primeng/styleclass';
+import { OverlayPanelModule } from 'primeng/overlaypanel';
 import { CardModule } from 'primeng/card';
 import { ButtonModule } from 'primeng/button';
 import { HttpClient, HttpClientModule } from '@angular/common/http';
@@ -13,7 +14,7 @@ import { SearchResult } from './interfaces/search.interface';
 @Component({
   selector: 'app-root',
   standalone: true,
-  imports: [RouterOutlet, CommonModule, FormsModule, InputTextModule, StyleClassModule, ButtonModule, CardModule, HttpClientModule],
+  imports: [RouterOutlet, CommonModule, FormsModule, InputTextModule, StyleClassModule, ButtonModule, CardModule, HttpClientModule, OverlayPanelModule],
   templateUrl: './app.component.html',
   styleUrl: './app.component.scss'
 })

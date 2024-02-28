@@ -49,7 +49,10 @@
                   <img alt="Card" [src]="searchResults[i].imgUrl" class="card-image" />
                 </ng-template>
                 <ng-template pTemplate="footer">
-                  <p-button label="Consulter" icon="pi pi-eye"></p-button>
+                  <p-overlayPanel #op [style]="{ maxWidth: '33%' }">
+                    {{searchResults[i].title}}
+                </p-overlayPanel>
+                <p-button (click)="op.toggle($event)" icon="pi pi-book" label="Voir les mots"></p-button>
                 </ng-template>
               </p-card>
             </ng-container>
